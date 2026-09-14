@@ -1,4 +1,30 @@
 # Online Grocery Delivery SQL Console
+## 🌐 Live Website
+
+**[Open Online Grocery Delivery SQL Console](https://dbms-console.vercel.app/)**
+
+## 🚀 Features
+
+- Run SQL queries through a web-based console
+- PostgreSQL database integration using Neon
+- React + Vite frontend
+- Node.js + Express backend
+- Database schema explorer
+- Query results and query history
+- Supports SELECT, INSERT, UPDATE and DELETE queries
+- Deployed using Vercel and Render
+
+## 🛠️ Technologies
+
+- React
+- Vite
+- Node.js
+- Express
+- PostgreSQL
+- Neon
+- GitHub
+- Vercel
+- Render
 
 A React and Express SQL console for the existing Neon PostgreSQL database. It does not create, migrate, alter, truncate, or delete database tables.
 
