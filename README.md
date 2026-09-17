@@ -1,13 +1,17 @@
-# Online Grocery Delivery SQL Console
-
-> A browser-based SQL and PL/SQL console for the Online Grocery Delivery Platform, connected to an Oracle Database. Explore the 19-table database schema, execute SQL queries, inspect results, and demonstrate PL/SQL functionality through an interactive web interface.
 
 ## 🌐 Live Demo
 
 **[Open Online Grocery Delivery SQL Console](https://dbms-console.vercel.app/)**
 
+# Online Grocery Delivery Platform — SQL Console
 
-## 📋 Table of Contents
+ A browser-based SQL and PL/SQL console for the Online Grocery Delivery Platform, connected to an Oracle Database. Explore the complete 20-table database schema, execute SQL queries, inspect results, and demonstrate PL/SQL functionality through an interactive web interface.
+
+## Live Demo
+
+[Open SQL Console](https://dbms-console.vercel.app/)
+
+## Table of Contents
 
 - [Overview](#overview)
 - [Features](#features)
@@ -17,335 +21,329 @@
 - [Getting Started](#getting-started)
 - [Web Console](#web-console)
 - [API Reference](#api-reference)
-- [SQL & PL/SQL Features](#sql--plsql-features)
+- [SQL and PL/SQL](#sql-and-plsql)
+- [Order Workflow](#order-workflow)
+- [Example Queries](#example-queries)
+- [Security](#security)
 - [Troubleshooting](#troubleshooting)
+- [Project Information](#project-information)
+
+## Overview
+
+The Online Grocery Delivery Platform is a Database Management Systems project implemented using Oracle SQL and PL/SQL.
+
+The database contains 20 relations covering customers, products, categories, carts, orders, payments, delivery, warehouses, reviews, returns, refunds, and invoices.
+
+A custom web-based SQL Console is developed to interact with the Oracle database through a Flask backend.
 
 ---
 
-## 📌 Overview
+## Features
 
-The **Online Grocery Delivery SQL Console** is a DBMS project that implements the database of an Online Grocery Delivery Platform using **Oracle SQL and PL/SQL**.
+### SQL Console
 
-The database contains **20 relations** covering customers, products, carts, orders, payments, delivery, warehouses, reviews, returns, refunds, and invoices.
+- Execute SQL queries through a web interface
+- Display query results in a formatted table
+- Show execution time and row count
+- Display SQL errors
+- Clear and copy queries
+- Query library for commonly used SQL commands
 
-A browser-based SQL Console is provided as the interface to interact with the Oracle database. Users can execute SQL statements, explore database tables, view query results, and demonstrate PL/SQL components.
+### Database Explorer
 
-The application follows this architecture:
+- View all 20 project tables
+- Select a table from the database explorer
+- Retrieve table records directly from Oracle
+- Display column names and data dynamically
+
+### SQL and PL/SQL Support
+
+The project demonstrates:
+
+- DDL commands
+- DML commands
+- SELECT queries
+- Aggregate functions
+- Joins
+- Subqueries
+- Stored procedures
+- Functions
+- Triggers
+- Cursors
+- Packages
+- Exception handling
+
+---
+
+## Tech Stack
+
+| Component | Technology |
+|---|---|
+| Database | Oracle Database 26ai |
+| Database Service | FREEPDB1 |
+| Query Language | SQL |
+| Procedural Language | PL/SQL |
+| Backend | Python + Flask |
+| Oracle Driver | python-oracledb |
+| Frontend | HTML5, CSS3, JavaScript |
+| IDE | Visual Studio Code |
+| Version Control | Git + GitHub |
+
+---
+
+## Project Structure
 
 ```text
-Browser
-   ↓
-SQL Console
-   ↓
-Flask Backend
-   ↓
-python-oracledb
-   ↓
-Oracle FREEPDB1
-   ↓
-20 Database Relations
-
- Features
--> Web SQL Console
-Interactive SQL editor
-Execute SQL statements directly against Oracle
-Formatted query results
-Row count and execution time
-SQL error display
-Clear and Copy query options
-Session query history
-
-  ->Database Explorer
-
-Displays all 20 project relations
-Clickable table explorer
-View table records directly from the browser
-Dynamically retrieves data from Oracle
-
--> Query Library
-
-Includes examples for:
-
-1.Basic SQL
-2.Aggregate queries
-3.Joins
-4.Subqueries
-5.PL/SQL
-
-   Database Automation
-Oracle sequences for ID generation
-Automatic ID-generation triggers
-Compound trigger for cart-total calculation
-Stored procedures
-PL/SQL function
-Explicit cursor
-PL/SQL package
-Exception handling
-
- Tech Stack
-Layer	Technology
-Database	Oracle Database 26ai
-Database Service	FREEPDB1
-Query Language	SQL
-Procedural Language	PL/SQL
-Backend	Python + Flask
-Oracle Driver	python-oracledb
-Frontend	HTML5, CSS3, JavaScript
-Development	Visual Studio Code
-Version Control	Git + GitHub
-
-
-   Project Structure
 OnlineGrocerySQLConsole/
-│
-├── app.py                  # Flask backend and API routes
-├── database.py             # Oracle database connection
-├── load_sql.py             # SQL/PLSQL script execution utility
-├── requirements.txt        # Python dependencies
-├── .env                    # Local database configuration
+├── app.py
+├── database.py
+├── load_sql.py
+├── requirements.txt
+├── .env
 │
 ├── templates/
-│   ├── index.html          # Landing page
-│   └── console.html        # SQL Console interface
+│   ├── index.html
+│   └── console.html
 │
 ├── static/
 │   ├── css/
-│   │   ├── landing.css     # Landing page styling
-│   │   └── console.css     # Console styling
+│   │   ├── landing.css
+│   │   └── console.css
 │   │
 │   └── js/
-│       ├── landing.js      # Landing page interactions
-│       └── console.js      # Console functionality
+│       ├── landing.js
+│       └── console.js
 │
 └── README.md
+```
+## Database Schema
 
+The database contains the following 20 relations:
+| No. | Relation            | Description                          |
+| --: | ------------------- | ------------------------------------ |
+|   1 | `PINCODE_INFO`      | Pincode and location information     |
+|   2 | `CATEGORY`          | Grocery product categories           |
+|   3 | `WAREHOUSE`         | Warehouse information                |
+|   4 | `PAYMENT_METHOD`    | Payment method details               |
+|   5 | `DELIVERY_AGENT`    | Delivery agent information           |
+|   6 | `CUSTOMER`          | Customer details                     |
+|   7 | `ADDRESS`           | Customer address information         |
+|   8 | `PRODUCT`           | Grocery product details              |
+|   9 | `DELIVERY_SCHEDULE` | Delivery scheduling information      |
+|  10 | `STORED_IN_SLOT`    | Warehouse slot allocation            |
+|  11 | `STORED_IN_QTY`     | Product quantity stored in warehouse |
+|  12 | `OFFERS`            | Product offer information            |
+|  13 | `CART`              | Customer shopping carts              |
+|  14 | `RETURNS`           | Product return records               |
+|  15 | `CONTAINS`          | Products contained in carts          |
+|  16 | `ORDERS`            | Customer order information           |
+|  17 | `REVIEW`            | Product reviews and ratings          |
+|  18 | `REFUND`            | Refund information                   |
+|  19 | `PAYMENT`           | Payment transaction details          |
+|  20 | `INVOICE`           | Invoice information                  |
 
-->   Database Schema
+The database uses primary keys, foreign keys, unique constraints, NOT NULL constraints, and composite keys to maintain data integrity.
 
-The database consists of 20 relations designed for the Online Grocery Delivery Platform.
-
-#	Table	Description
-1	PINCODE_INFO	Pincode and location information
-2	CATEGORY	Grocery product categories
-3	WAREHOUSE	Warehouse information
-4	PAYMENT_METHOD	Available payment methods
-5	DELIVERY_AGENT	Delivery agent details
-6	CUSTOMER	Customer information
-7	ADDRESS	Customer delivery addresses
-8	PRODUCT	Grocery product details
-9	DELIVERY_SCHEDULE	Delivery scheduling information
-10	STORED_IN_SLOT	Product warehouse-slot mapping
-11	STORED_IN_QTY	Product quantities
-12	OFFERS	Product offers
-13	CART	Customer shopping carts
-14	RETURNS	Return records
-15	CONTAINS	Products contained in carts
-16	ORDERS	Customer orders
-17	REVIEW	Product reviews and ratings
-18	REFUND	Refund information
-19	PAYMENT	Payment transactions
-20	INVOICE	Generated invoices
-
-
-->Database Integrity
-The database uses:
-
-Primary Keys
-Foreign Keys
-Unique constraints
-NOT NULL constraints
-Composite keys where required
-Referential integrity
-
-   -> Getting Started
-Prerequisites
+## Getting Started
+### Prerequisites
 
 Make sure the following are installed:
 
-Python 3.x
-Oracle Database 26ai
-Git
-A modern web browser
-1. Clone the Repository
-git clone YOUR_GITHUB_REPOSITORY_URL
-cd OnlineGrocerySQLConsole
-2. Create a Virtual Environment
+- Python 3.x
+- Oracle Database 26ai
+- Git
+- Visual Studio Code
+- A modern web browser
 
-For Windows:
+### Clone the Repository
 
+```bash
+git clone https://github.com/DBMS-Project-2026-27/DBMS_Console.git
+cd DBMS_Console
+```
+### Create Virtual Environment
+### For Windows:
+
+```bash
 python -m venv venv
 venv\Scripts\activate
-3. Install Dependencies
+```
+
+### Install Dependencies:
+
+```bash
 pip install -r requirements.txt
-4. Configure Oracle
+```
 
-Configure the Oracle connection details in .env.
+### Configure Oracle Database
 
-The application uses:
+Configure the Oracle database connection using environment variables in the .env file.
+```bash
+Host=localhost
+Port=1521
+Service=FREEPDB1
+```
+Do not add the actual database password to the README or GitHub repository.
 
-Host: localhost
-Port: 1521
-Service: FREEPDB1
-5. Start the Application
+### Run the Application
+```bash
 python app.py
-
-Open the application in your browser:
-
+```
+The application will be available at:
+```bash
 http://127.0.0.1:5000
--> Web Console
+```
+## Web Console
 
-The SQL Console provides a browser-based interface for interacting with the Oracle database.
+The web interface provides an interactive SQL environment connected to the Oracle database.
 
-Main Components
-┌─────────────────────────────────────────────────────┐
-│ grocery.sql                    ● FREEPDB1 Connected │
-├───────────────┬─────────────────────────────────────┤
-│ SQL Console   │                                     │
-│               │       SQL Editor                    │
-│ Database      │                                     │
-│ Explorer      │  SELECT * FROM CUSTOMER;            │
-│               │                                     │
-│ Query Library │       [ Execute ]                   │
-│               │                                     │
-│ 20 Relations  │       Query Results                 │
-│               │                                     │
-│ CUSTOMER      │  CUSTOMER_ID | CUSTOMER_NAME       │
-│ PRODUCT       │  C021        | ...                 │
-│ ORDERS        │                                     │
-│ PAYMENT       │                                     │
-└───────────────┴─────────────────────────────────────┘
-Database Explorer
+The console includes:
 
-Selecting a table from the sidebar retrieves its records directly from Oracle.
+- SQL Editor
+- Execute button
+- Clear button
+- Copy query option
+- Query Results section
+- Database Explorer
+- Query Library
+- Database connection status
 
-For example:
+The Database Explorer allows users to select a table and retrieve its records directly from Oracle.
 
-PRODUCT
-   ↓
-SELECT * FROM PRODUCT
-   ↓
-Formatted Results
-Query History
+## API Reference
+The Flask backend provides the following API endpoints:
 
-Queries executed during the current browser session can be viewed through the Query History section.
+| Method | Endpoint                  | Description                           |
+| ------ | ------------------------- | ------------------------------------- |
+| `GET`  | `/`                       | Displays the landing page             |
+| `GET`  | `/sql-console`            | Opens the SQL Console                 |
+| `GET`  | `/api/tables`             | Returns the list of project tables    |
+| `GET`  | `/api/table/<table_name>` | Returns records from a selected table |
+| `POST` | `/api/execute`            | Executes an SQL statement             |
 
-🔌 API Reference
-
-The Flask backend provides API endpoints used by the frontend.
-
-Method	Endpoint	Description
-GET	/	Loads the landing page
-GET	/sql-console	Loads the SQL Console
-GET	/api/tables	Returns the 20 database tables
-GET	/api/table/<table_name>	Returns records from a table
-POST	/api/execute	Executes an SQL statement
-POST /api/execute
-
-Example request:
-
+Example API Request:
+```bash
 {
   "sql": "SELECT * FROM CUSTOMER"
 }
+```
+The API returns query results along with information such as row count and execution time.
 
-For a successful query, the backend returns:
+## SQL and PL/SQL
 
-Columns
-Rows
-Row count
-Execution time
+The project implements SQL and PL/SQL concepts required for the database system.
 
-For DML statements, the response contains the number of affected rows.
+### SQL Concepts
 
--> SQL & PL/SQL Features
+- Data Definition Language
+- Data Manipulation Language
+- SELECT statements
+- Aggregate functions
+- GROUP BY
+- Joins
+- Subqueries
+- Filtering
+- Sorting
 
-The project demonstrates major DBMS concepts through Oracle SQL and PL/SQL.
+### Stored Procedures
 
-SQL
-DDL
-DML
-SELECT queries
-Aggregate functions
-GROUP BY
-Joins
-Subqueries
-Filtering and sorting
-PL/SQL
-Procedures
+The project includes the following procedures:
+
+```sql
 SP_PLACE_ORDER
 SP_PROCESS_RETURN
 SP_PRINT_ORDER_HISTORY
-Function
+```
+
+#### Function:
+```bash
 FN_PRODUCT_REVIEW_AVG
+```
+This function calculates the average review rating for a product.
 
-Calculates the average rating of a product.
-
-Package
+#### Package:
+```bash
 PKG_ORDERS
-
-Provides:
-
+```
+The package provides:
+```bash
 place_order()
 cancel_order()
 get_order_status()
-Triggers
+```
+### Triggers
 
-The database includes automatic ID-generation triggers and:
+Sequences and triggers are used for automatic ID generation.
 
+The project also contains a compound trigger:
+```bash
 TRG_UPDATE_CART_TOTALS
-
-The cart trigger automatically recalculates:
-
+```
+This trigger automatically updates:
+```bash
 Total_Items
 Total_Price
+```
+in the CART relation when records in the CONTAINS relation are inserted, updated, or deleted.
 
-whenever cart contents change.
+### Cursor
+A cursor-based procedure is implemented to display order history.
 
-Exception Handling
+### Exception Handling
+PL/SQL exception handling is used to handle invalid operations and database-related errors.
 
-PL/SQL procedures handle situations such as:
 
-Empty carts
-Missing orders
-Invalid customer/cart combinations
-Database constraint violations
--> Order Workflow
+## Order Workflow
 
-The database represents the core grocery ordering flow:
+The main order-related database flow is:
 
+```text
 CUSTOMER
-    ↓
+   |
+   v
 CART
-    ↓
+   |
+   v
 CONTAINS
-    ↓
+   |
+   v
 ORDERS
-    ↓
+   |
+   v
 PAYMENT
-    ↓
+   |
+   v
 INVOICE
-
-Additional entities handle:
-
+```
+Supporting relations include:
+```bash
 PRODUCT
 CATEGORY
 WAREHOUSE
-DELIVERY
+DELIVERY_AGENT
+DELIVERY_SCHEDULE
 REVIEW
 RETURNS
-REFUND
--> Sample SQL Queries
+```
 
-The console can be used to demonstrate queries such as:
-
-View Customers
+## Example Queries
+### Display Customers:
+```bash
 SELECT * FROM CUSTOMER;
-View Products
+```
+### Display Products:
+```bash
 SELECT * FROM PRODUCT;
-Aggregate Query
+```
+### Count Products by Category:
+```bash
 SELECT CATEGORY_NAME, COUNT(*) AS PRODUCT_COUNT
 FROM PRODUCT
 GROUP BY CATEGORY_NAME;
-Join Query
+```
+
+### Display Customer Orders:
+```bash
 SELECT
     C.Customer_Name,
     O.Order_ID,
@@ -353,31 +351,75 @@ SELECT
 FROM CUSTOMER C
 JOIN ORDERS O
     ON C.Customer_ID = O.Customer_ID;
-Subquery
+```
+
+### Products Above Average Price:
+```bash
 SELECT *
 FROM PRODUCT
 WHERE Price_Of_Item >
       (SELECT AVG(Price_Of_Item)
        FROM PRODUCT);
--> Troubleshooting
-Oracle Connection Error
+```
 
-Check that the Oracle database service is running and verify:
+## Security
 
+Database credentials are stored using environment variables.
+
+The `.env` file should never be committed to GitHub.
+
+Recommended `.gitignore` entries:
+
+```text
+.env
+venv/
+__pycache__/
+```
+## Troubleshooting
+
+### Oracle Connection Error
+
+Make sure the Oracle Database service is running and verify:
+
+```text
 Host: localhost
 Port: 1521
 Service: FREEPDB1
-Flask Not Starting
+```
 
-Make sure the virtual environment is activated:
+## Flask Application Not Starting
 
+Activate the virtual environment:
+```bash
 venv\Scripts\activate
+```
 
 Then run:
-
+```bash
 python app.py
-Dependency Error
+```
 
-Install the required packages:
-
+## Missing Python Package
+Install the required dependencies:
+```bash
 pip install -r requirements.txt
+```
+
+## SQL Execution Error
+Check the SQL statement and read the Oracle error displayed by the console.
+For foreign-key errors, make sure the referenced parent record exists before inserting a child record.
+
+
+## Project Information
+| Field           | Details                          |
+| --------------- | -------------------------------- |
+| Project         | Online Grocery Delivery Platform |
+| Database        | Oracle Database 26ai             |
+| Backend         | Python Flask                     |
+| Frontend        | HTML, CSS, JavaScript            |
+| Oracle Driver   | python-oracledb                  |
+| Version Control | GitHub                           |
+
+The project demonstrates database design, SQL implementation, PL/SQL programming, database constraints, triggers, procedures, functions, packages, and integration with a web-based SQL Console.
+
+
