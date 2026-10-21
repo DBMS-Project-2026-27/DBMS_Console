@@ -1,124 +1,88 @@
+# Online Grocery Delivery — SQL Console
 
-## 🌐 Live Demo
+[Open the live console](https://dbms-console.vercel.app/)
 
-**[Open Online Grocery Delivery SQL Console](https://dbms-console.vercel.app/)**
-
-# Online Grocery Delivery Platform — SQL Console
-
- A browser-based SQL and PL/SQL console for the Online Grocery Delivery Platform, connected to an Oracle Database. Explore the complete 20-table database schema, execute SQL queries, inspect results, and demonstrate PL/SQL functionality through an interactive web interface.
-
-## Live Demo
-
-[Open SQL Console](https://dbms-console.vercel.app/)
-
-## Table of Contents
-
-- [Overview](#overview)
-- [Features](#features)
-- [Tech Stack](#tech-stack)
-- [Project Structure](#project-structure)
-- [Database Schema](#database-schema)
-- [Getting Started](#getting-started)
-- [Web Console](#web-console)
-- [API Reference](#api-reference)
-- [SQL and PL/SQL](#sql-and-plsql)
-- [Order Workflow](#order-workflow)
-- [Example Queries](#example-queries)
-- [Security](#security)
-- [Troubleshooting](#troubleshooting)
-- [Project Information](#project-information)
-
-## Overview
-
-The Online Grocery Delivery Platform is a Database Management Systems project implemented using Oracle SQL and PL/SQL.
-
-The database contains 20 relations covering customers, products, categories, carts, orders, payments, delivery, warehouses, reviews, returns, refunds, and invoices.
-
-A custom web-based SQL Console is developed to interact with the Oracle database through a Flask backend.
-
----
+A React frontend and Express API for exploring the grocery delivery database in PostgreSQL (Neon), running SQL, and managing records without writing SQL.
 
 ## Features
 
-### SQL Console
+- SQL editor supporting SELECT, INSERT, UPDATE, and DELETE, with results, timing, errors, and local query history.
+- Database Explorer showing the live public database schema.
+- A standalone **Database Operations** section, inspired by the alumni console, with ADD/UPDATE/DELETE tabs and a table selector.
+- Side-by-side operation form and Generated SQL panels, with Preview SQL, Reset, and Execute SQL controls.
+- A charcoal and teal theme with amber highlights across the console, explorer, history, and operation panels.
+- Forms generated from live column metadata, including required fields, defaults, generated fields, and primary keys.
+- Composite primary-key support, explicit NULL values, and database constraint errors displayed in the form.
+- Preview validation without changing data; editing a form clears its previous preview.
+- Delete confirmation, returned record details, and desktop/mobile layouts.
 
-- Execute SQL queries through a web interface
-- Display query results in a formatted table
-- Show execution time and row count
-- Display SQL errors
-- Clear and copy queries
-- Query library for commonly used SQL commands
+## Run locally
 
-### Database Explorer
+Requires Node.js 20.19+ or 22.12+ and a PostgreSQL database.
 
-- View all 20 project tables
-- Select a table from the database explorer
-- Retrieve table records directly from Oracle
-- Display column names and data dynamically
-
-### SQL and PL/SQL Support
-
-The project demonstrates:
-
-- DDL commands
-- DML commands
-- SELECT queries
-- Aggregate functions
-- Joins
-- Subqueries
-- Stored procedures
-- Functions
-- Triggers
-- Cursors
-- Packages
-- Exception handling
-
----
-
-## Tech Stack
-
-| Component | Technology |
-|---|---|
-| Database | Oracle Database 26ai |
-| Database Service | FREEPDB1 |
-| Query Language | SQL |
-| Procedural Language | PL/SQL |
-| Backend | Python + Flask |
-| Oracle Driver | python-oracledb |
-| Frontend | HTML5, CSS3, JavaScript |
-| IDE | Visual Studio Code |
-| Version Control | Git + GitHub |
-
----
-
-## Project Structure
-
-```text
-OnlineGrocerySQLConsole/
-├── app.py
-├── database.py
-├── load_sql.py
-├── requirements.txt
-├── .env
-│
-├── templates/
-│   ├── index.html
-│   └── console.html
-│
-├── static/
-│   ├── css/
-│   │   ├── landing.css
-│   │   └── console.css
-│   │
-│   └── js/
-│       ├── landing.js
-│       └── console.js
-│
-└── README.md
+```bash
+git clone https://github.com/DBMS-Project-2026-27/DBMS_Console.git
+cd DBMS_Console
+npm install
+cp .env.example .env
 ```
-## Database Schema
 
-The database contains the following 20 relations:
+Set `DATABASE_URL` in `.env` to your PostgreSQL connection string. The current production connection configuration uses SSL, as required by Neon. Never commit credentials.
+
+```bash
+npm run dev
+```
+
+Open the Vite URL shown in the terminal (normally `http://localhost:5173`). Vite proxies `/api` to the Express server on port 3001. `PORT` can override the backend port; update the Vite proxy if using a different port.
+
+```bash
+npm run build  # Build the frontend into dist/
+npm start      # Start the backend
+npm test       # Run unit tests; database integration tests skip without TEST_DATABASE_URL
+```
+
+To run the integration tests against a disposable PostgreSQL test database:
+
+```bash
+TEST_DATABASE_URL=postgresql://user:password@localhost/test_database npm test
+```
+
+The test role must be able to create schemas. Tests create a unique schema, run real API/database operations, and drop that schema afterward. Use a dedicated local test database.
+
+## Database Operations
+
+1. Choose **ADD**, **UPDATE**, or **DELETE**, and select a table.
+2. For Add, fill the schema-driven form. Blank optional fields use their database defaults (or NULL); generated fields are supplied automatically. Check **Set NULL** for an explicit null.
+3. For Update, enter the record's primary key, choose **Field to update**, and enter its new value. Composite keys require every key field. Key and generated columns cannot be updated. An empty text value and an explicit NULL remain distinct.
+4. For Delete, enter the complete primary key.
+5. Click **PREVIEW SQL** to validate the request and see the generated SQL. Preview does not modify records. Changing any input, table, or operation clears the old preview.
+6. Click **EXECUTE SQL** to apply the previewed operation. Deletion requires **Confirm delete**. Successful execution shows the affected record and disables repeat execution until a new preview is generated.
+7. Use **RESET** to clear the form, preview, and result.
+
+Tables without a declared primary key support Add, but Update and Delete are disabled to prevent ambiguous mutations. PostgreSQL enforces foreign keys, unique constraints, checks, required fields, and triggers. Database errors preserve the form input for correction.
+
+Numeric, boolean, date/time, JSON, and array values use PostgreSQL input formats, such as `12.50`, `true`, `2026-10-22`, `{"name":"value"}`, and `{one,two}`. The SQL preview displays escaped values for review; execution rebuilds and validates the operation on the server and uses bound parameters.
+
+## API
+
+| Method | Endpoint | Description |
+| --- | --- | --- |
+| GET | `/api/health` | Database connectivity |
+| GET | `/api/schema` | Public base tables and column metadata |
+| POST | `/api/query` | Execute one supported SQL statement: `{ "sql": "SELECT * FROM product LIMIT 25" }` |
+| GET | `/api/tables/:table/records?offset=0` | Up to 50 rows, column metadata, and `hasMore` |
+| POST | `/api/tables/:table/preview` | Validate and preview `{ "operation": "add", "values": { "name": "Apples" } }` without writing |
+| POST | `/api/tables/:table/records` | Insert `{ "values": { "name": "Apples" } }` |
+| PATCH | `/api/tables/:table/records` | Update `{ "keys": { "id": 1 }, "values": { "name": "Pears" } }` |
+| DELETE | `/api/tables/:table/records` | Delete `{ "keys": { "id": 1 } }` |
+
+Use the exact table and column names returned by `/api/schema`. Mutation responses contain `row` and `rowCount`; inserts return HTTP 201. Missing tables/records return 404. Invalid fields, incomplete keys, and data/constraint errors return 400 with an `error` message. Composite keys require every primary-key column in `keys`. Other columns are rejected in `keys`.
+
+Metadata includes `name`, `type`, `nullable`, `primaryKey`, `hasDefault`, and `readOnly`. Omitted insert fields use defaults. Update requests must include at least one writable field. Identifiers are validated against database metadata and quoted; record values use bound parameters.
+
+## Grocery database model
+
+The project's grocery model defines these 20 relations (the explorer reads whichever tables are present in the connected PostgreSQL database):
 | No. | Relation            | Description                          |
 | --: | ------------------- | ------------------------------------ |
 |   1 | `PINCODE_INFO`      | Pincode and location information     |
@@ -144,282 +108,23 @@ The database contains the following 20 relations:
 
 The database uses primary keys, foreign keys, unique constraints, NOT NULL constraints, and composite keys to maintain data integrity.
 
-## Getting Started
-### Prerequisites
 
-Make sure the following are installed:
-
-- Python 3.x
-- Oracle Database 26ai
-- Git
-- Visual Studio Code
-- A modern web browser
-
-### Clone the Repository
-
-```bash
-git clone https://github.com/DBMS-Project-2026-27/DBMS_Console.git
-cd DBMS_Console
-```
-### Create Virtual Environment
-### For Windows:
-
-```bash
-python -m venv venv
-venv\Scripts\activate
-```
-
-### Install Dependencies:
-
-```bash
-pip install -r requirements.txt
-```
-
-### Configure Oracle Database
-
-Configure the Oracle database connection using environment variables in the .env file.
-```bash
-Host=localhost
-Port=1521
-Service=FREEPDB1
-```
-Do not add the actual database password to the README or GitHub repository.
-
-### Run the Application
-```bash
-python app.py
-```
-The application will be available at:
-```bash
-http://127.0.0.1:5000
-```
-## Web Console
-
-The web interface provides an interactive SQL environment connected to the Oracle database.
-
-The console includes:
-
-- SQL Editor
-- Execute button
-- Clear button
-- Copy query option
-- Query Results section
-- Database Explorer
-- Query Library
-- Database connection status
-
-The Database Explorer allows users to select a table and retrieve its records directly from Oracle.
-
-## API Reference
-The Flask backend provides the following API endpoints:
-
-| Method | Endpoint                  | Description                           |
-| ------ | ------------------------- | ------------------------------------- |
-| `GET`  | `/`                       | Displays the landing page             |
-| `GET`  | `/sql-console`            | Opens the SQL Console                 |
-| `GET`  | `/api/tables`             | Returns the list of project tables    |
-| `GET`  | `/api/table/<table_name>` | Returns records from a selected table |
-| `POST` | `/api/execute`            | Executes an SQL statement             |
-
-Example API Request:
-```bash
-{
-  "sql": "SELECT * FROM CUSTOMER"
-}
-```
-The API returns query results along with information such as row count and execution time.
-
-## SQL and PL/SQL
-
-The project implements SQL and PL/SQL concepts required for the database system.
-
-### SQL Concepts
-
-- Data Definition Language
-- Data Manipulation Language
-- SELECT statements
-- Aggregate functions
-- GROUP BY
-- Joins
-- Subqueries
-- Filtering
-- Sorting
-
-### Stored Procedures
-
-The project includes the following procedures:
-
-```sql
-SP_PLACE_ORDER
-SP_PROCESS_RETURN
-SP_PRINT_ORDER_HISTORY
-```
-
-#### Function:
-```bash
-FN_PRODUCT_REVIEW_AVG
-```
-This function calculates the average review rating for a product.
-
-#### Package:
-```bash
-PKG_ORDERS
-```
-The package provides:
-```bash
-place_order()
-cancel_order()
-get_order_status()
-```
-### Triggers
-
-Sequences and triggers are used for automatic ID generation.
-
-The project also contains a compound trigger:
-```bash
-TRG_UPDATE_CART_TOTALS
-```
-This trigger automatically updates:
-```bash
-Total_Items
-Total_Price
-```
-in the CART relation when records in the CONTAINS relation are inserted, updated, or deleted.
-
-### Cursor
-A cursor-based procedure is implemented to display order history.
-
-### Exception Handling
-PL/SQL exception handling is used to handle invalid operations and database-related errors.
-
-
-## Order Workflow
-
-The main order-related database flow is:
+## Structure and deployment
 
 ```text
-CUSTOMER
-   |
-   v
-CART
-   |
-   v
-CONTAINS
-   |
-   v
-ORDERS
-   |
-   v
-PAYMENT
-   |
-   v
-INVOICE
-```
-Supporting relations include:
-```bash
-PRODUCT
-CATEGORY
-WAREHOUSE
-DELIVERY_AGENT
-DELIVERY_SCHEDULE
-REVIEW
-RETURNS
+src/App.jsx             SQL editor, results, schema explorer, history
+src/RecordManager.jsx   Database Operations tabs, forms, SQL preview, execution
+src/styles.css          Shared and responsive styles
+server/index.js         Production startup
+server/app.js           Express app and existing query/health endpoints
+server/records.js       Schema metadata, validated preview, parameterized CRUD
+server/records.test.js  PostgreSQL API integration tests
+server/db.js            Server-side database connection
+server/sqlSafety.js     SQL console statement validation
 ```
 
-## Example Queries
-### Display Customers:
-```bash
-SELECT * FROM CUSTOMER;
-```
-### Display Products:
-```bash
-SELECT * FROM PRODUCT;
-```
-### Count Products by Category:
-```bash
-SELECT CATEGORY_NAME, COUNT(*) AS PRODUCT_COUNT
-FROM PRODUCT
-GROUP BY CATEGORY_NAME;
-```
+The frontend is deployed on Vercel. `vercel.json` forwards `/api` to the Express backend on Render. Deploy both frontend and backend from the updated repository for the new container to work. Database credentials stay in the backend environment.
 
-### Display Customer Orders:
-```bash
-SELECT
-    C.Customer_Name,
-    O.Order_ID,
-    O.Total_Amount
-FROM CUSTOMER C
-JOIN ORDERS O
-    ON C.Customer_ID = O.Customer_ID;
-```
+The console grants database write access to anyone who can reach its API, matching the existing SQL console. Use a restricted database role and restrict deployment access when working with non-demo data. The record endpoints do not add authentication.
 
-### Products Above Average Price:
-```bash
-SELECT *
-FROM PRODUCT
-WHERE Price_Of_Item >
-      (SELECT AVG(Price_Of_Item)
-       FROM PRODUCT);
-```
-
-## Security
-
-Database credentials are stored using environment variables.
-
-The `.env` file should never be committed to GitHub.
-
-Recommended `.gitignore` entries:
-
-```text
-.env
-venv/
-__pycache__/
-```
-## Troubleshooting
-
-### Oracle Connection Error
-
-Make sure the Oracle Database service is running and verify:
-
-```text
-Host: localhost
-Port: 1521
-Service: FREEPDB1
-```
-
-## Flask Application Not Starting
-
-Activate the virtual environment:
-```bash
-venv\Scripts\activate
-```
-
-Then run:
-```bash
-python app.py
-```
-
-## Missing Python Package
-Install the required dependencies:
-```bash
-pip install -r requirements.txt
-```
-
-## SQL Execution Error
-Check the SQL statement and read the Oracle error displayed by the console.
-For foreign-key errors, make sure the referenced parent record exists before inserting a child record.
-
-
-## Project Information
-| Field           | Details                          |
-| --------------- | -------------------------------- |
-| Project         | Online Grocery Delivery Platform |
-| Database        | Oracle Database 26ai             |
-| Backend         | Python Flask                     |
-| Frontend        | HTML, CSS, JavaScript            |
-| Oracle Driver   | python-oracledb                  |
-| Version Control | GitHub                           |
-
-The project demonstrates database design, SQL implementation, PL/SQL programming, database constraints, triggers, procedures, functions, packages, and integration with a web-based SQL Console.
-
-
+The grocery schema covers customers, products, categories, carts, orders, payments, deliveries, warehouses, reviews, returns, refunds, and invoices. `SQL_DDL_DML_Practice_Queries.sql` contains separate practice SQL; it is not executed automatically by the app.
