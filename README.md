@@ -131,4 +131,10 @@ The grocery schema covers customers, products, categories, carts, orders, paymen
 
 ## PantryGraph Console
 
-The separate `PantryGraphConsole/` folder contains the PantryGraph database console frontend, Express API, Neon PostgreSQL and Neo4j Aura connectivity, Vercel API functions, and setup documentation. Follow its [README](PantryGraphConsole/README.md) to run it. Keep local `.env` credentials private; only `.env.example` belongs in Git.
+**Live application:** [pantrygraph-console.vercel.app](https://pantrygraph-console.vercel.app/)
+
+PantryGraph is a separate, graph-focused database exploration console in [`PantryGraphConsole/`](PantryGraphConsole/). It connects to the project’s existing **Neon PostgreSQL** database and **Neo4j Aura** graph database. The interface provides SQL and Cypher editors, live schema inspection, tabular results, and an interactive graph view for Neo4j results. The application is read-only and does not create, seed, or migrate either database.
+
+The frontend is built with React and Vite, with Cytoscape.js rendering graph results. A Node.js and Express API keeps database credentials on the server, checks connectivity and schema, and runs parameterized read queries. On Vercel, the Vite build is served as the frontend and the `api/` route files expose the Express handlers as serverless functions. Production database credentials and the console access password are configured as Vercel environment variables; do not commit `.env` files or credentials.
+
+For architecture, environment variable names, local setup, API routes, security behavior, and deployment instructions, see the [PantryGraph Console README](PantryGraphConsole/README.md).
