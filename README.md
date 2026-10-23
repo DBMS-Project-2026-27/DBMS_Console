@@ -128,3 +128,7 @@ The frontend is deployed on Vercel. `vercel.json` forwards `/api` to the Express
 The console grants database write access to anyone who can reach its API, matching the existing SQL console. Use a restricted database role and restrict deployment access when working with non-demo data. The record endpoints do not add authentication.
 
 The grocery schema covers customers, products, categories, carts, orders, payments, deliveries, warehouses, reviews, returns, refunds, and invoices. `SQL_DDL_DML_Practice_Queries.sql` contains separate practice SQL; it is not executed automatically by the app.
+
+## PantryGraph Console
+
+The separate `PantryGraphConsole/` folder contains the PantryGraph database console frontend, Express API, Neon PostgreSQL and Neo4j Aura connectivity, Vercel API functions, and setup documentation. Follow its [README](PantryGraphConsole/README.md) to run it. Keep local `.env` credentials private; only `.env.example` belongs in Git.
