@@ -120,6 +120,9 @@ PantryGraphConsole/
 │   └── services/
 │       ├── postgres.js          # Neon PostgreSQL health, schema, and queries
 │       └── neo4j.js             # Neo4j Aura health, schema, and queries
+├── queries/
+│   ├── README.md                # How to use the Cypher examples
+│   └── grocery-graph.cypher     # Read-only graph query collection
 ├── .env.example                 # Names of local environment variables
 ├── vercel.json                 # Vercel build and security headers
 └── package.json                # Dependencies and npm scripts
@@ -137,3 +140,7 @@ PantryGraphConsole/
 | `neo4j-driver` | Neo4j driver |
 | `dotenv` | Local environment variable loading |
 | `concurrently` | Runs local frontend and API together |
+
+## Cypher examples
+
+The [`queries/`](queries/) folder contains a copy-and-run library of read-only Neo4j graph queries, including general schema-independent exploration, relationship counts, graph connectivity, and examples for the grocery relationship types used in this project. Run one query block at a time in the console’s **Neo4j Aura / Cypher** editor. Check the live Schema tab if a database uses different relationship type names.

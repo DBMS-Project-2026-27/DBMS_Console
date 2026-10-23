@@ -137,4 +137,4 @@ PantryGraph is a separate, graph-focused database exploration console in [`Pantr
 
 The frontend is built with React and Vite, with Cytoscape.js rendering graph results. A Node.js and Express API keeps database credentials on the server, checks connectivity and schema, and runs parameterized read queries. On Vercel, the Vite build is served as the frontend and the `api/` route files expose the Express handlers as serverless functions. Production database credentials and the console access password are configured as Vercel environment variables; do not commit `.env` files or credentials.
 
-For architecture, environment variable names, local setup, API routes, security behavior, and deployment instructions, see the [PantryGraph Console README](PantryGraphConsole/README.md).
+For architecture, environment variable names, local setup, API routes, security behavior, and deployment instructions, see the [PantryGraph Console README](PantryGraphConsole/README.md). The [Cypher query library](PantryGraphConsole/queries/) contains read-only graph queries to run in the Neo4j workspace.
