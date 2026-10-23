@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import RecordManager from './RecordManager.jsx';
 
 const initialSql = 'SELECT * FROM PRODUCT LIMIT 25;';
 
@@ -80,6 +81,7 @@ export default function App() {
       </section>
       <aside className="history-panel"><div className="panel-heading"><span>QUERY HISTORY</span><small>{history.length}</small></div>{history.length === 0 ? <p className="subtle">Your recently executed queries appear here.</p> : <div className="history-list">{history.map((item, index) => <button key={`${item}-${index}`} onClick={() => setSql(item)}><span>#{history.length - index}</span><code>{item}</code></button>)}</div>}</aside>
     </div>
+    <RecordManager tables={schema} loadingSchema={loadingSchema} />
     <footer>Allowed statements: SELECT · INSERT · UPDATE · DELETE <span>Credentials remain on the server</span></footer>
   </main>;
 }
