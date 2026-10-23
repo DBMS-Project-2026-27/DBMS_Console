@@ -1,0 +1,29 @@
+{
+  "name": "grocery-graph-console",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "concurrently -k \"npm:dev:server\" \"npm:dev:client\"",
+    "dev:client": "vite",
+    "dev:server": "node --watch server/index.js",
+    "build": "vite build",
+    "test": "node --test",
+    "start": "node server/index.js"
+  },
+  "dependencies": {
+    "cytoscape": "^3.33.1",
+    "dotenv": "^16.6.1",
+    "express": "^5.1.0",
+    "neo4j-driver": "^5.28.1",
+    "pg": "^8.16.3",
+    "pg-cursor": "^2.22.0",
+    "react": "^19.1.1",
+    "react-dom": "^19.1.1",
+    "vite": "^7.1.7"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-react": "^5.2.0",
+    "concurrently": "^9.2.1"
+  }
+}

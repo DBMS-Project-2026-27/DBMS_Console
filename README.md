@@ -16,3 +16,7 @@ A React and Express SQL console for the existing Neon PostgreSQL database. It do
 - `npm test` runs the SQL-request safety tests.
 
 The browser only calls `/api`. The Express server reads `DATABASE_URL`; no credentials are sent to or embedded in frontend code. The query endpoint accepts one `SELECT`, `INSERT`, `UPDATE`, or `DELETE` statement per request. The schema explorer uses PostgreSQL metadata only.
+
+## PantryGraph Console
+
+The separate `PantryGraphConsole/` folder contains the PantryGraph database console frontend, Express API, Neon PostgreSQL and Neo4j Aura connectivity, Vercel API functions, and setup documentation. Follow its [README](PantryGraphConsole/README.md) to run it. Keep local `.env` credentials private; only `.env.example` belongs in Git.
