@@ -6,7 +6,7 @@ const { Pool } = pg;
 /** Verify Neon/PostgreSQL connectivity using a read-only transaction. */
 export async function checkPostgresConnection() {
   if (!process.env.NEON_DATABASE_URL) {
-    return { status: 'unconfigured', message: 'Set NEON_DATABASE_URL in PantryGraphConsole/.env.' };
+    return { status: 'unconfigured', message: 'Set NEON_DATABASE_URL in Project 2/.env.' };
   }
 
   const pool = new Pool({

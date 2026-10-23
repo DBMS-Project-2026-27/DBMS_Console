@@ -5,7 +5,7 @@ import neo4j from 'neo4j-driver';
 export async function checkNeo4jConnection() {
   const { NEO4J_URI, NEO4J_USERNAME, NEO4J_PASSWORD } = process.env;
   if (!NEO4J_URI || !NEO4J_USERNAME || !NEO4J_PASSWORD) {
-    return { status: 'unconfigured', message: 'Set NEO4J_URI, NEO4J_USERNAME, and NEO4J_PASSWORD in PantryGraphConsole/.env.' };
+    return { status: 'unconfigured', message: 'Set NEO4J_URI, NEO4J_USERNAME, and NEO4J_PASSWORD in Project 2/.env.' };
   }
 
   let driver;
