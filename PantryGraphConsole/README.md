@@ -91,7 +91,12 @@ Other scripts:
 npm run build  # Build the frontend into dist/
 npm start      # Start the Express API only
 npm test       # Run the Node.js test suite
+npm run check:databases  # Verify both configured database connections
+npm run check:postgres  # Verify the Neon PostgreSQL connection
+npm run check:neo4j     # Verify the Neo4j Aura connection
 ```
+
+Standalone, read-only connectivity examples and setup details are in [`connectivity/`](connectivity/). They read the same `.env` variables as the application and do not expose credentials in their output.
 
 ## Deploy on Vercel
 
@@ -123,6 +128,11 @@ PantryGraphConsole/
 ├── queries/
 │   ├── README.md                # How to use the Cypher examples
 │   └── grocery-graph.cypher     # Read-only graph query collection
+├── connectivity/
+│   ├── README.md                # Connection diagnostics instructions
+│   ├── postgres.js              # Read-only Neon/PostgreSQL connection check
+│   ├── neo4j.js                 # Read-only Neo4j Aura connection check
+│   └── check-*.js               # CLI commands to run the connection checks
 ├── .env.example                 # Names of local environment variables
 ├── vercel.json                 # Vercel build and security headers
 └── package.json                # Dependencies and npm scripts
