@@ -9,7 +9,10 @@
     "dev:server": "node --watch server/index.js",
     "build": "vite build",
     "test": "node --test",
-    "start": "node server/index.js"
+    "start": "node server/index.js",
+    "check:postgres": "node connectivity/check-postgres.js",
+    "check:neo4j": "node connectivity/check-neo4j.js",
+    "check:databases": "node connectivity/check-databases.js"
   },
   "dependencies": {
     "cytoscape": "^3.33.1",
