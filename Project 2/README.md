@@ -1,4 +1,4 @@
-# PantryGraph Console
+# Project 2 — DA3: PantryGraph Console
 
 **Live application:** [https://pantrygraph-console.vercel.app](https://pantrygraph-console.vercel.app/)
 
@@ -73,7 +73,7 @@ Requirements: Node.js **20.19+** or **22.12+**, npm, and credentials for whichev
 From the repository root:
 
 ```bash
-cd PantryGraphConsole
+cd "Project 2"
 npm install
 ```
 
@@ -100,9 +100,9 @@ Standalone, read-only connectivity examples and setup details are in [`connectiv
 
 ## Deploy on Vercel
 
-The production site is [pantrygraph-console.vercel.app](https://pantrygraph-console.vercel.app/). The PantryGraph folder is a self-contained Vercel project:
+The production site is [pantrygraph-console.vercel.app](https://pantrygraph-console.vercel.app/). This folder is a self-contained Vercel project:
 
-1. Create or select the Vercel project connected to this Git repository and set **Root Directory** to `PantryGraphConsole`.
+1. Create or select the Vercel project connected to this Git repository and set **Root Directory** to `Project 2`.
 2. Set the production environment variables listed above for the databases you want to enable, plus `APP_PASSWORD`.
 3. Build with `npm run build`; the output directory is `dist`. The repository’s `vercel.json` defines these settings and security response headers.
 4. Deploy and open the production URL. If you change environment variables, create a new deployment for the changes to take effect.
@@ -112,7 +112,7 @@ The frontend is served as static Vite output. Explicit files under `api/` are Ve
 ## Project layout
 
 ```text
-PantryGraphConsole/
+Project 2/
 ├── api/                         # Vercel function routes; delegate to Express
 ├── src/
 │   ├── App.jsx                  # Workspace, editors, schema, results, graph view

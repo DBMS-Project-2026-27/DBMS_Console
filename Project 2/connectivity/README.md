@@ -4,7 +4,7 @@ These runnable Node.js examples verify the PantryGraph Console connections to Ne
 
 ## Setup and run
 
-From the `PantryGraphConsole/` folder, make sure dependencies are installed and `.env` contains the connection settings. Then run either database check or both:
+From the `Project 2/` folder, make sure dependencies are installed and `.env` contains the connection settings. Then run either database check or both:
 
 ```bash
 npm run check:postgres

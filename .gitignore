@@ -1,14 +1,12 @@
-# Credentials
-.env
-.env.*
-!.env.example
+# Local secrets
+**/.env
+**/.env.*
+!**/.env.example
 
-# Dependencies and builds
-node_modules/
-dist/
-coverage/
-
-# Local/editor files
-.DS_Store
-*.log
-.vscode/
+# Generated dependencies, builds, and local tooling
+**/node_modules/
+**/dist/
+**/coverage/
+**/.vercel/
+**/.vite/
+**/*.log

@@ -1,0 +1,14 @@
+# Credentials
+.env
+.env.*
+!.env.example
+
+# Dependencies and builds
+node_modules/
+dist/
+coverage/
+
+# Local/editor files
+.DS_Store
+*.log
+.vscode/
